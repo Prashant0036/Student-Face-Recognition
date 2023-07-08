@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Classifier</title>
+    <link rel="shortcut icon"
+      href="https://tse1.mm.bing.net/th?id=OIP.Y9ZAhcj5j5aII1YQplw8sAHaHa&pid=Api&rs=1&c=1&qlt=95&w=121&h=121"
+      type="image/x-icon">
+    <style>
+      .body{
+
+        background-image: url("gpgimage.jpeg");
+        background-repeat: no-repeat;
+        z-index: -1;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        background-color: rgb(255, 255, 255);
+        
+
+      }
+
+      .container {
+        width: 100%;
+        height: 100%;
+        background-color: rgb(255, 255, 255);
+        /* font-size:10px; */
+
+      }
+
+      .cont {
+        margin: auto;
+        width: 90%;
+
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        background-color: white;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        box-shadow: 2px 2px 2px rgb(255, 255, 255);
+        /* background-color: red; */
+
+      }
+
+      h1 {
+
+        margin-top: 5%;
+        font-size: 3em;
+        text-shadow: 2px 2px 20px black;
+        background-color: white;
+      }
+
+      img {
+        margin-top: 5%;
+        height: 30%;
+        width: 25%;
+        box-shadow: 10px 10px 20px rgb(50, 48, 48);
+        background-color: white;
+      }
+
+      #inputData {
+        margin-top: 3%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 80%;
+        height: 30%;
+        align-items: center;
+        background-color: white;
+        justify-content: center;
+        /* background-color: yellow; */
+        padding: 6%;
+      }
+
+      input {
+        margin-top: 3%;
+        width: 30%;
+        height: 15%;
+        font-size: 0.5em;
+        background-color: white;
+        padding: 1.5%;
+        background-color: rgb(97, 141, 50);
+        border-radius: 5px;
+        color: white;
+        display: flex;
+        flex-wrap: wrap;
+
+      }
+
+      .lbl {
+        margin-top: 4%;
+        background-color: white;
+        font-size: 0.5em;
+      }
+
+      .lbl1 {
+        margin-top: 2%;
+        font-size: 0.5em;
+        background-color: white;
+      }
+
+      #sub {
+
+        margin-top: 3%;
+        width: 18%;
+        height: 15%;
+        font-size: 0.8em;
+        font-weight: bold;
+        background-color: rgb(97, 141, 50);
+        border-radius: 15px;
+        box-shadow: 2px 2px 2px black;
+        padding: 0.8%;
+        text-align: center;
+      }
+
+      #estResult {
+
+        background-color: white;
+        padding: 5%;
+        margin-top: 1%;
+        font-size: 2em;
+
+      }
+
+      @media screen and (min-width: 900px) {
+        #inputData {
+
+
+          height: 5%;
+          padding: 0.5%;
+        }
+
+        img {
+          height: 20%;
+          width: 20%;
+          margin-top: 2%;
+
+        }
+
+        .lbl {
+
+          margin-top: 1%;
+        }
+
+        .lbl1 {
+
+          margin-top: 1%;
+        }
+
+        input {
+          margin-top: 1%;
+        }
+
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="cont">
+
+        <h1>Student Classifier
+          <hr>
+        </h1>
+
+        <img id="uploadPreview" src="girlWithBook.jpg"
+          alt="">
+
+        <div id="inputData">
+          <label class="lbl" for="imageInput">Upload Your Image File</label>
+          <input id="imageInput" type="file" name="myPhoto" onchange="PreviewImage();" />
+
+          <label class="lbl1" for="imageInput">Or Drop your Image Here</label>
+          <button id="sub" onclick="onClickedClassifyStudent()" type="submit">Submit</button>
+        </div>
+
+
+      </div>
+    </div>
+
+    <script type="text/javascript">
+
+
+      //function for only showing the image on image tag from input tag
+      function PreviewImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("imageInput").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+          document.getElementById("uploadPreview").src = oFREvent.target.result;
+          // console.log("source of image is : ",document.getElementById("uploadPreview").src);
+        };
+      }
+
+
+
+function abc(){
+     // var file_2;
+      imageInput.addEventListener('change', (event) => {
+        file_2 = event.target.files[0];
+        // Perform further processing with the selected image file 
+        console.log("name of file is ", file_2['name']);
+        //console.log(file_2['name']); 
+      });
+
+
+    }
+abc();
+      function onClickedClassifyStudent() {
+
+
+        var imageInput = document.getElementById('imageInput');
+
+        //creating the element using javascript and replacing the input tag with h2 tag to show the result 
+        estResult = document.createElement('h2')
+        estResult.setAttribute("id", "estResult")
+       
+
+        //estResult.innerHTML = "hello" // comment this line this is only for testing
+        inputData.replaceWith(estResult)
+
+
+        //const file_2 =null; 
+
+        console.log(file_2['name']);
+        console.log("Second");
+
+        console.log(file_2['name']);
+
+
+        var url = "http://127.0.0.1:5000/classify_image";
+
+        $.post(url, {
+
+          image_data: file_2['name']
+
+        }, function (data, status) {
+          console.log(data[0]['class']);
+          estResult.innerHTML =  data[0]['class'].toString() ;
+          console.log(status);
+        });
+      }
+
+
+    </script>
+
+
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
+  
+</html>
